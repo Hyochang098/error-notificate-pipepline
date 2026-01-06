@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: deme-error
+
+# actuator (운영 느낌 최소 세팅)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,loggers
+  endpoint:
+    health:
+      show-details: always
+
+# 로그: PoC에선 파일로도 남겨두면 promtail이 tail 하기 편함
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    # 필요하면 아래를 DEBUG로 올려서 요청 흐름 확인 가능
+    # org.springframework.web.servlet.DispatcherServlet: DEBUG
+
+  file:
+    name: /logs/app.log
+
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"
